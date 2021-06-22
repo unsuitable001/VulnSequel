@@ -38,7 +38,7 @@ docker start <container_name/id>
 docker exec -ti <container_name/id> /bin/bash
 ```
 
-From the shell of the container, run `./start.sh`.
+From the shell of the container, run `./start_db.sh` to start the database and `./start.sh` to start the server. **Database gets started automatically.**
 
 ### Database
 

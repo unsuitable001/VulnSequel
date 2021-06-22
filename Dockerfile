@@ -17,8 +17,4 @@ RUN set -ex \
 RUN set -ex \
     pip3 install -r requirements.txt
 
-ENV LD_LIBRARY_PATH=$ORACLE_HOME/lib:LD_LIBRARY_PATH
-
-CMD /usr/sbin/startup.sh && tail -f /dev/null
-
 EXPOSE 5000

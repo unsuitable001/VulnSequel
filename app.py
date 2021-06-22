@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import os
 import cx_Oracle
 
@@ -10,4 +10,5 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
+    assert request.method == 'GET'
     return render_template('index.html', name='VulnSequel')
