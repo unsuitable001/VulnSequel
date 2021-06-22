@@ -21,20 +21,24 @@ A PoC to demonstate basic SQL injection vulnarabilities. B. Tech DBMS Presentati
 
 ## Using docker
 
+Remember: It's just experimental. May not work out of the box.
+
 ### Build
 
 ```bash
 docker build -t unsuitable001/vulnsql .
-docker run -it -p 49161:1521 -p 8080:8080 -p 5000:5000 -v VulnSequel:/devrepo unsuitable001/vulnsql
+docker run -d -p 49161:1521 -p 8080:8080 -p 5000:5000 -v ${PWD}:/devrepo unsuitable001/vulnsql
+docker exec -ti <container_name/id> /bin/bash
 ```
 
 ### Run
 
 ```bash
-docker start -at <container_name/id>
+docker start <container_name/id>
+docker exec -ti <container_name/id> /bin/bash
 ```
 
-From the shell of the container, run `flask run`.
+From the shell of the container, run `./start.sh`.
 
 ### Database
 
@@ -43,6 +47,8 @@ From the shell of the container, run `flask run`.
 username: ADMIN
 password: admin
 ```
+
+Then create a new workspace, schema and set password accordingly.
 
 ## Troubleshooting
 
