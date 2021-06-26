@@ -19,6 +19,12 @@ A PoC to demonstate basic SQL injection vulnarabilities. B. Tech DBMS Presentati
    flask run
    ```
 
+4. Create Users Table and populate with dummy data
+
+   ```sql
+   CREATE TABLE USERS(username varchar2(26) NOT NULL PRIMARY KEY, pass varchar2(16) NOT NULL);
+   ```
+
 ## Using docker
 
 Remember: It's just experimental. May not work out of the box.
