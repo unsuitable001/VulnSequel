@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, url_for, redirect, session
 import os
-import cx_Oracle
 
-from flask.helpers import flash 
+import cx_Oracle
+from flask import Flask, redirect, render_template, request, session, url_for
+from flask.helpers import flash
+
 conn = cx_Oracle.connect(os.getenv('dbcred', 'dbms/dbms1234@localhost:1521'))
 cursor = conn.cursor()
 
@@ -30,6 +31,23 @@ def profile():
         else:
             return render_template('profile.html', name='profile', user=session['username'], books=attrs)
 
+@app.route('/secure/profile', methods=['GET', 'POST'])
+def secureProfile():
+    if session.get('username') is None:
+        return redirect(url_for('home'))
+    if request.method == 'GET':
+        return render_template('profile.html', name='profile', user=session['username'])
+    else:
+        book = request.form.get('book')
+        print(book)
+        attrs = cursor.execute("""
+        SELECT * FROM BOOKS WHERE LOWER(BOOK_NAME) LIKE LOWER('%' || :bookname || '%')
+        """, bookname = book).fetchall()
+        if not attrs:
+            flash('unable to find any book')
+            return redirect(url_for('secureProfile'))
+        else:
+            return render_template('profile.html', name='profile', user=session['username'], books=attrs)
 
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
