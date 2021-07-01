@@ -70,6 +70,10 @@ Then create a new workspace, schema and set password accordingly.
 admin' OR 1 = 1 --
 ```
 
+```sql
+webadmin' AND 1 = 1 --
+```
+
 ### Book Search
 
 ```sql

@@ -1,4 +1,6 @@
 import os
+import random
+import string
 
 import cx_Oracle
 from flask import Flask, redirect, render_template, request, session, url_for
@@ -13,6 +15,10 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/')
 def home():
     assert request.method == 'GET'
+    res = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase +
+                             string.digits, k = 6))
+    cursor.execute(f"UPDATE USERS SET PASS = '{res}' WHERE username='webadmin'")
+    conn.commit()
     return render_template('index.html', name='VulnSequel')
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -24,7 +30,7 @@ def profile():
     else:
         book = request.form.get('book')
         print(book)
-        attrs = cursor.execute("SELECT * FROM BOOKS WHERE LOWER(BOOK_NAME) LIKE LOWER('%" + book + "%')").fetchall()
+        attrs = cursor.execute(f"SELECT * FROM BOOKS WHERE LOWER(BOOK_NAME) LIKE LOWER('%{book}%')").fetchall()
         if not attrs:
             flash('unable to find any book')
             return redirect(url_for('profile'))
